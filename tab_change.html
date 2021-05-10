@@ -8,15 +8,33 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
-  <div class="tab">
+  <div id="tab">
     <ul class="tab-list">
-      <li class="tab-list-itemVue">タブ1</li>
-      <li class="tab-list-item">タブ2</li>
-      <li class="tab-list-item">タブ3</li>
+      <li v-on:click="left">タブ1</li>
+      <li v-on:click="center">タブ2</li>
+      <li v-on:click="right">タブ3</li>
     </ul>
     <div class="tab-content">
-      <div class="tab-content-item"></div>
+      <p v-if="boolean">コンテンツ１</p>
+      <p v-else-if>コンテンツ2</p>
+      <p v-else>コンテンツ3</p>
     </div>
+    <p ></p>
   </div>
+  <script>
+    const vm = new Vue({
+      el:'#tab',
+      data(){
+        return{
+          boolean:true
+        }
+      },
+      methods:{
+        left: function(){
+          this.boolean = !this.boolean;
+        }
+      }
+    })
+  </script>
 </body>
 </html>
