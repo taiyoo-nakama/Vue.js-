@@ -14,10 +14,10 @@
       <li v-on:click="center">タブ2</li>
       <li v-on:click="right">タブ3</li>
     </ul>
-    <div class="tab-content">
+    <div class="tabcontent">
       <p v-if="boolean">コンテンツ１</p>
-      <p v-else-if>コンテンツ2</p>
-      <p v-else>コンテンツ3</p>
+      <p v-else-if="boolean2">コンテンツ2</p>
+      <p v-else="boolean3">コンテンツ3</p>
     </div>
     <p ></p>
   </div>
@@ -26,15 +26,23 @@
       el:'#tab',
       data(){
         return{
-          boolean:true
+          boolean:true,
+          boolean2:true,
+          boolean3:true
         }
       },
       methods:{
         left: function(){
           this.boolean = !this.boolean;
+        },
+        center: function(){
+          this.boolean2 = !this.boolean2;
+        },
+        right: function(){
+          this.boolean3 = !this.boolean3;
         }
-      }
-    })
+      },
+    });
   </script>
 </body>
 </html>
