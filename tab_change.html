@@ -9,7 +9,7 @@
 </head>
 <body>
   <div id="tab">
-    <ul class="tab-list">
+    <ul v-bind:class="tab-style">
       <li v-on:click="tablist">タブ1</li>
       <li v-on:click="tablist">タブ2</li>
       <li v-on:click="tablist">タブ3</li>
@@ -18,21 +18,34 @@
     <p ></p>
   </div>
   <script>
-    Vue.component('tab-タブ１',{template: '<div>コンテンツ1</div>'})
-    Vue.component('tab-タブ２',{template: '<div>コンテンツ2</div>'})
-    Vue.component('tab-タブ3',{template: '<div>コンテンツ3</div>'})
+    Vue.component('tablist-タブ１',{template: '<div>コンテンツ1</div>'})
+    Vue.component('tablist-タブ２',{template: '<div>コンテンツ2</div>'})
+    Vue.component('tablist-タブ3',{template: '<div>コンテンツ3</div>'})
     new Vue({
       el:'#tab',
       data:{
         currentTab:'コンテンツ1',
         tabs:['コンテンツ１','コンテンツ２','コンテンツ３']
       },
+      methods:{
+        tablist(){
+          this.tablist++;
+        }
+      },
       computed:{
-        currentTabComponent:function(){
-          return this.currentTab
+        currentTabComponent(){
+          return this.currentTab = this.currentTab
         }
       }
     })
   </script>
+  <style>
+    .tab-style{
+      display: flex;
+      color: white;
+      background-color: black;
+      list-style: none;
+    }
+  </style>
 </body>
 </html>
