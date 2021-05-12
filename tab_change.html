@@ -10,39 +10,29 @@
 <body>
   <div id="tab">
     <ul class="tab-list">
-      <li v-on:click="left">タブ1</li>
-      <li v-on:click="center">タブ2</li>
-      <li v-on:click="right">タブ3</li>
+      <li v-on:click="tablist">タブ1</li>
+      <li v-on:click="tablist">タブ2</li>
+      <li v-on:click="tablist">タブ3</li>
     </ul>
-    <div class="tabcontent">
-      <p v-if="boolean">コンテンツ１</p>
-      <p v-else-if="boolean2">コンテンツ2</p>
-      <p v-else="boolean3">コンテンツ3</p>
-    </div>
+    <div class="tabcontent">{{currentTab}}</div>
     <p ></p>
   </div>
   <script>
-    const vm = new Vue({
+    Vue.component('tab-タブ１',{template: '<div>コンテンツ1</div>'})
+    Vue.component('tab-タブ２',{template: '<div>コンテンツ2</div>'})
+    Vue.component('tab-タブ3',{template: '<div>コンテンツ3</div>'})
+    new Vue({
       el:'#tab',
-      data(){
-        return{
-          boolean:true,
-          boolean2:true,
-          boolean3:true
-        }
+      data:{
+        currentTab:'コンテンツ1',
+        tabs:['コンテンツ１','コンテンツ２','コンテンツ３']
       },
-      methods:{
-        left: function(){
-          this.boolean = !this.boolean;
-        },
-        center: function(){
-          this.boolean2 = !this.boolean2;
-        },
-        right: function(){
-          this.boolean3 = !this.boolean3;
+      computed:{
+        currentTabComponent:function(){
+          return this.currentTab
         }
-      },
-    });
+      }
+    })
   </script>
 </body>
 </html>
