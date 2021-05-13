@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>window.html</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="button" id="btn">
+    <button v-on:click="openModel">開く</button>
+  </div>
+  <open-modal v-on:from-child="closeModel" v-show:="showContent"></open-modal>
+  <script>
+    new Vue({
+      el: '#btn',
+      data: {
+        showContent: false
+      },
+      methods: {
+        openModel: function () {
+          this.showContent = true
+        },
+        closeModel: function () {
+          this.showContent = false
+        }
+      }
+    });
+
+
+    Vue.component('open-modal', {
+      template: `
+        <div class="contents" v-show="showContent">
+          <div class="content">
+            <p>モーダルウィンドウ</p>
+            <p><button v-on:click="closeModel">閉じる</button></p>
+          </div>
+        </div>
+          `,
+      methods: {
+        clickEvent: function () {
+          this.$emit('from-child')
+        }
+      }
+    })
+  </script>
+  <style>
+    .contents {
+      /* 要素を重ねた時の順番 */
+      z-index: -1;
+      /* 画面戦隊を覆う設定 */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      /* 画面中央位に要素を表示させる設定 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content {
+      z-index: 2;
+      width: 50%;
+      background-color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+  </style>
+</body>
+
+</html>
