@@ -12,9 +12,29 @@
 <body>
   <div class="button" id="btn">
     <button v-on:click="openModel">開く</button>
+    <open-modal v-on:from-child="closeModel" v-show:="showContent">モーダルウィンドウ
+    </open-modal>
   </div>
-  <open-modal v-on:from-child="closeModel" v-show:="showContent"></open-modal>
   <script>
+    Vue.component('open-modal', {
+      template: `
+        <div class="contents" v-on:click:"clickEvent">
+          <div class="content">
+            <p><slot></slot></p>
+            <button v-on:click="clickEvent">閉じる</button>
+          </div>
+        </div>
+          `,
+      methods: {
+        clickEvent: function () {
+          this.$emit('from-child')
+        },
+        stopEvent: function(){
+          event.stopImmediatePropagation()
+        }
+      }
+    })
+
     new Vue({
       el: '#btn',
       data: {
@@ -26,31 +46,16 @@
         },
         closeModel: function () {
           this.showContent = false
-        }
-      }
-    });
-
-
-    Vue.component('open-modal', {
-      template: `
-        <div class="contents" v-show="showContent">
-          <div class="content">
-            <p>モーダルウィンドウ</p>
-            <p><button v-on:click="closeModel">閉じる</button></p>
-          </div>
-        </div>
-          `,
-      methods: {
-        clickEvent: function () {
-          this.$emit('from-child')
-        }
+        },
       }
     })
+
+
   </script>
   <style>
     .contents {
       /* 要素を重ねた時の順番 */
-      z-index: -1;
+      z-index: 1;
       /* 画面戦隊を覆う設定 */
       position: fixed;
       top: 0;
