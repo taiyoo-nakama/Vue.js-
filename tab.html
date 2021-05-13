@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+  <div id="tab">
+    <div class="tab-wrap">
+      <div class="tab　active">タブ1</div>
+      <div class="tab">タブ2</div>
+      <div class="tab">タブ3</div>
+    </div>
+  </div>
+  <div class="tab-content">
+    <div>コンテンツ１
+    </div>
+  </div>
+  <script>
+    const tabs = [
+      {
+        name:'タブ１',
+        id: 1,
+        content:'コンテンツ1'
+      },
+      {
+        name:'タブ2',
+        id: 2,
+        content:'コンテンツ2'
+      },
+      {
+        name:'タブ3',
+        id: 3,
+        content:'コンテンツ3'
+      },
+    ];
+
+    Vue.component('tab-title',{
+      props: {
+        name: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: Number,
+          required: true,
+        },
+        activeTabId: {
+          type: Number,
+          required: true,
+        },
+      },
+      template: '<div class="tab" :class="{active: id === activeTabId}">{{name}}</div>',
+    });
+
+    Vue.component('tab-content', {
+      props: {
+        content: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: Number,
+          required: true,
+        },
+        activeTabId: {
+          type: Number,
+          required: true,
+        },
+      },
+      template:'<div v-if="id === activeTabId">{{content}}</div>',
+    });
+
+    new Vue({
+      el:'#tab',
+      data:{
+        tabs,
+        activeTabId: tabs[0].id,
+      },
+      methods:{
+        updateTab: function(id){
+          this.activeTabId = id;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
